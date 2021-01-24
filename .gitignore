@@ -1,0 +1,6 @@
+/vendor
+/.idea
+/composer.lock
+/tmp
+/files
+/test_scripts
