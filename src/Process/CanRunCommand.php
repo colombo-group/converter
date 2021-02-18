@@ -12,6 +12,7 @@ namespace Colombo\Converters\Process;
 use Symfony\Component\Process\Process;
 
 abstract class CanRunCommand {
+    /** @var Process */
 	protected $process;
 	protected $process_options = [];
 	private $command;
@@ -62,7 +63,7 @@ abstract class CanRunCommand {
 					$status,
 					$error,
 					mb_substr( $this->process->getOutput(), 0, $this->output_when_error_length),
-					$this->command
+					$this->process->getCommandLine()
 				)
 			);
 		}
