@@ -16,6 +16,7 @@ use Colombo\Converters\Process\CanRunCommand;
 class Qpdf extends CanRunCommand implements ConverterInterface {
     
     protected $bin = 'qpdf';
+    public static $gs_bin = '';
     
     protected $process_options = [
         '--linearize' => true,
@@ -38,11 +39,31 @@ class Qpdf extends CanRunCommand implements ConverterInterface {
         $result = new ConvertedResult();
     
         $command = $this->buildCommand([$path]);
+        $repaired_path = $path . ".repaired";
+        $try_repair = false;
+        start_convert:
         try{
+            if($try_repair){
+                $repaire_command = [
+                   self::$gs_bin,
+                   '-o',$repaired_path,
+                    '-sDEVICE=pdfwrite',
+                    '-dPDFSETTINGS=/prepress',
+                    $path
+                ];
+                $this->run($repaire_command);
+                $command = $this->buildCommand([$repaired_path]);
+            }
             $this->run( $command);
             $result->setContent( $this->output() );
         }catch (\RuntimeException $ex){
+            if ($try_repair == false && self::$gs_bin){
+                $try_repair = true;
+                goto start_convert;
+            }
             $result->addErrors( $ex->getMessage(), $ex->getCode());
+        } finally {
+            @unlink($repaired_path);
         }
         return $result;
     }
