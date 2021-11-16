@@ -10,7 +10,6 @@ namespace Colombo\Converters;
 
 
 use Colombo\Converters\Exceptions\Result\CanNotWriteResultException;
-use Colombo\Converters\Helpers\TemporaryDirectory;
 use Illuminate\Filesystem\Filesystem;
 use PhpZip\ZipFile;
 
@@ -215,7 +214,7 @@ class ConvertedResult {
      * @param string $zip_path full path with file name
      * @param string $file_name file name for content when result is single file
      *
-     * @return \PhpZip\ZipFileInterface
+     * @return ZipFile
      * @throws CanNotWriteResultException
      * @throws \PhpZip\Exception\ZipException
      */

@@ -12,7 +12,7 @@ class TemporaryDirectoryTest extends TestCase
 	/** @var string */
 	protected $temporaryDirectoryFullPath;
 	
-	public function setUp()
+	public function setUp(): void
 	{
 		parent::setUp();
 		$this->temporaryDirectoryFullPath = rtrim(sys_get_temp_dir(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.$this->temporaryDirectory;

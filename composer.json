@@ -1,6 +1,6 @@
 {
     "name": "colombo/converters",
-    "description": "Suport convert document to other format",
+    "description": "Support convert document to other format",
     "type": "library",
     "authors": [
         {
@@ -18,13 +18,13 @@
         "illuminate/support": "^7.0|^8.0",
         "illuminate/filesystem": "^7.0|^8.0",
         "guzzlehttp/guzzle": "^7.0|^8.0",
-        "nelexa/zip": "^3.1",
+        "nelexa/zip": "^4.0",
         "hocvt/php-apache-tika": "dev-tmp",
         "symfony/finder": "^4.2|^5.0",
         "symfony/mime": "^4.2|^5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "symfony/var-dumper": "^4.3"
+        "phpunit/phpunit": "^8.0|^9.0",
+        "symfony/var-dumper": "^4.4|^5.0"
     }
 }
