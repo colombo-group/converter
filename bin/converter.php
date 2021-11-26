@@ -12,31 +12,30 @@ require __DIR__ . "/../vendor/autoload.php";
 
 $arguments = $argv;
 
-if(in_array( "-h", $arguments) || in_array( "--help", $arguments)){
-	echo "converter [options] input_file output_file
+if(count($argv) == 1){
+	echo "converter input_file output_format output_file
 Hỗ trợ chuyển đổi các định dạng file
-Options :
-\t -h : Show this help
-\t -i : Path to input fil
 	";
 	exit();
 }
 
 $converter = new \Colombo\Converters\Helpers\Converter();
 
-$converter->setInput($input);
+$converter->setInput($arguments[1]);
 
 // force custom converter
-$ocrConverter = new \Colombo\Converters\Drivers\GS();
-$converter->setForceConverter( $ocrConverter );
-$converter->setOutputFormat( 'pdf');
+if($arguments[4] ?? false){
+    $converter_class = '\\Colombo\\Converters\\Drivers\\' . $arguments[4];
+    $ocrConverter = new $converter_class;
+    $converter->setForceConverter( $ocrConverter );
+}
+$converter->setOutputFormat( $arguments[2]);
 
 
 $result = $converter->run();
 
 if($result->isSuccess()){
-	$result->saveTo( 'tmp/pdf.pdf');
-	$result->saveAsZip('tmp/pdf.zip','xxx.pdf');
+	$result->saveTo( $arguments[3] );
 	print_r( $result->getMessages());
 }else{
 	print_r($result->getErrors());
